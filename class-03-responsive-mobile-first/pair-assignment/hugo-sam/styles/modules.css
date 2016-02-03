@@ -67,4 +67,20 @@
   .icon-menu {
     display: none;
   }
+
+  .main-nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .main-nav ul {
+    display: none;
+    padding: 1%;
+
+  }
+
+  .main-nav:hover ul {
+    display: flex;
+    flex-direction: row;
+  }
 }
