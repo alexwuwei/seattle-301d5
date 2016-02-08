@@ -53,21 +53,29 @@ Article.fetchAll = function() {
         var eTag = xhr.getResponseHeader('eTag');
         if (!localStorage.eTag || localStorage.eTag !== eTag) {
           localStorage.eTag = eTag;
+          $.getJSON('data/hackerIpsum.json', function (data) {
+            console.log(data);
+            Article.loadAll(data);
+            articleView.initIndexPage();
+            localStorage.setItem('data', JSON.stringify(data));
+          });
         } else {
           // Article.loadAll(JSON.parse(localStorage.rawData));
+          Article.loadAll(JSON.parse(localStorage.rawData));
+          console.log('all articles: ' + Article.all); //TODO: What do we pass in here to the .loadAll function?
+          articleView.initIndexPage(); //TODO: What method do we call to render the index page?
         }
       }
     });
     // When rawData is already in localStorage,
     // we can load it with the .loadAll function above,
     // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(JSON.parse(localStorage.rawData));//TODO: What do we pass in here to the .loadAll function?
-    articleView.initIndexPage(); //TODO: What method do we call to render the index page?
   } else {
     $.getJSON('data/hackerIpsum.json', function (data) {
-      localStorage.setItem('rawData', data);
-      Article.loadAll(JSON.parse(data));
-      articleView.initIndexPage;
+      console.log(data);
+      Article.loadAll(data);
+      articleView.initIndexPage();
+      localStorage.setItem('data', JSON.stringify(data));
     }
     )
     // TODO: When we don't already have the rawData,
