@@ -41,8 +41,11 @@
   // TODO: Correct the SQL to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE ...;',
-      callback
+      'DELETE FROM articles',
+      function(result) {
+        console.log('Successfully deleted all article instances. In other words, that shit is now delete yo', result);
+        if (callback) callback();
+      }
     );
   };
 
