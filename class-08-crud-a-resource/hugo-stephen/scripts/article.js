@@ -29,7 +29,7 @@
       'author VARCHAR(145) NOT NULL, ' +
       'authorURL VARCHAR(300) NOT NULL, ' +
       'publishedOn DATE NOT NULL, ' +
-      'body VARCHAR(10000) NOT NULL'
+      'body VARCHAR(10000) NOT NULL' +
     ');',
       function(result) {
         console.log('Successfully set up the articles table.', result);
@@ -41,7 +41,7 @@
   // DONE: Correct the SQL to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
-      'DELETE FROM articles',
+      'DELETE FROM articles;',
       function(result) {
         console.log('Successfully deleted all article instances. In other words, that shit is now delete yo', result);
         if (callback) callback();
@@ -86,9 +86,13 @@
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
+        'UPDATE articles SET id=1 , title=\'New article\', category=\'firewall\', author=\'Captain Crunch\', authorURL=\'http:\/\/www.google.com\', publishedOn=\'2013-01-01\', body=\'this is the body of the article there are many like it but this one exercises every day so it is quite lean\' WHERE id=1'
         /* ... */
       ],
-      callback
+      function(result) {
+        console.log('successfully updated record with ID of 1', result);
+        if (callback) callback();
+      }
     );
   };
 
