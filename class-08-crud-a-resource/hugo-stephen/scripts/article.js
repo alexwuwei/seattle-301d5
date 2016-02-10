@@ -86,8 +86,10 @@
   Article.prototype.updateRecord = function(callback) {
     webDB.execute(
       [
-        'UPDATE articles SET id=1 , title=\'New article\', category=\'firewall\', author=\'Captain Crunch\', authorURL=\'http:\/\/www.google.com\', publishedOn=\'2013-01-01\', body=\'this is the body of the article there are many like it but this one exercises every day so it is quite lean\' WHERE id=1'
-        /* ... */
+        {
+          'sql': 'UPDATE articles SET (title, author, authorURL, category, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?);',
+          'data': [this.title, this.author, this.authorURL, this.category, this.publishedOn, this.body],
+        }
       ],
       function(result) {
         console.log('successfully updated record with ID of 1', result);
@@ -107,22 +109,31 @@
   // we need to retrieve the JSON and process it.
   // If the DB has data already, we'll load up the data (sorted!), and then hand off control to the View.
   Article.fetchAll = function(next) {
-    webDB.execute('', function(rows) {
+    webDB.execute('SELECT * FROM articles', function(rows) {
       if (rows.length) {
         // Now instanitate those rows with the .loadAll function, and pass control to the view.
+        Article.loadAll(rows);
+        articleView.initIndexPage();
 
       } else {
         $.getJSON('/data/hackerIpsum.json', function(rawData) {
+          localStorage.rawData = JSON.stringify(rawData);
           // Cache the json, so we don't need to request it next time:
           rawData.forEach(function(item) {
             var article = new Article(item); // Instantiate an article based on item from JSON
-            // Cache the newly-instantiated article in DB:
+            webDB.execute( [
+              {
+                'sql': 'INSERT INTO articles (title, author, authorURL, category, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?);',
+                'data': [item.title, item.author, item.authorURL, item.category, item.publishedOn, item.body],
+              }
+            ]) // Cache the newly-instantiated article in DB:
 
           });
           // Now get ALL the records out the DB, with their database IDs:
-          webDB.execute('', function(rows) {
+          webDB.execute('SELECT * FROM articles', function(rows) {
             // Now instanitate those rows with the .loadAll function, and pass control to the view.
-
+            Article.loadAll(rows);
+            articleView.initIndexPage();
           });
         });
       }
