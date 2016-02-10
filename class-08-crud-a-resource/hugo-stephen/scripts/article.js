@@ -19,7 +19,7 @@
     return template(this);
   };
 
-  // TODO: Set up a DB table for articles.
+  // DONE: Set up a DB table for articles.
   Article.createTable = function(callback) {
     webDB.execute(
       'CREATE TABLE IF NOT EXISTS articles(' +
@@ -38,7 +38,7 @@
     );
   };
 
-  // TODO: Correct the SQL to delete all records from the articles table.
+  // DONE: Correct the SQL to delete all records from the articles table.
   Article.truncateTable = function(callback) {
     webDB.execute(
       'DELETE FROM articles',
@@ -50,7 +50,7 @@
   };
 
 
-  // TODO: Insert an article instance into the database:
+  // DONE: Insert an article instance into the database:
   Article.prototype.insertRecord = function(callback) {
     webDB.execute(
       [
@@ -66,15 +66,19 @@
     );
   };
 
-  // TODO: Delete an article instance from the database:
+  // DONE: Delete an article instance from the database:
   Article.prototype.deleteRecord = function(callback) {
     webDB.execute(
       [
         {
-          /* ... */
+          'sql': 'DELETE FROM articles WHERE title=?;',
+          'data': ['Transmitting Open-source Arrays'],
         }
       ],
-      callback
+      function(result) {
+        console.log('deleted \'Transmitting Open-source Arrays\' article instance new record successfully', result);
+        if (callback) callback();
+      }
     );
   };
 
