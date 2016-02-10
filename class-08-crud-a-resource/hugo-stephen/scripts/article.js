@@ -55,11 +55,14 @@
     webDB.execute(
       [
         {
-          'sql': '...;',
-          'data': [],
+          'sql': 'INSERT INTO articles (title, author, authorURL, category, publishedOn, body) VALUES (?, ?, ?, ?, ?, ?);',
+          'data': [this.title, this.author, this.authorURL, this.category, this.publishedOn, this.body],
         }
       ],
-      callback
+      function(result) {
+        console.log('inserted new record successfully', result);
+        if (callback) callback();
+      }
     );
   };
 
