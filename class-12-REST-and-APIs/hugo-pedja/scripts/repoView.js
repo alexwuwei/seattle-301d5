@@ -10,17 +10,9 @@
     console.log('hey ui is working');
   };
 
-  // TODO: How do you want to render a single repo as html? Return your filled in HTML template.
+  // DONE: How do you want to render a single repo as html? Return your filled in HTML template.
   var render = function(repo) {
-
-
-    console.log('THIS IS FINALLY WORKING RENDER FUNCTION AND STUFF');
-    // $about.find('ul').append($('li').html('HELLO'));
-    // console.log('HELLO AGAIN');
     return $('<li>').html('<a href="' + repo.html_url + '">' + repo.name +'</a>');
-    // var li = $('li').html('Project name:');
-    // return li;
-    // console.log(repo);
   };
 
   // DONE: If all the data is loaded, we can prep the UI and render the repos.
