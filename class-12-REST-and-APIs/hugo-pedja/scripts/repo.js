@@ -5,7 +5,15 @@
 
   repos.requestRepos = function(callback) {
     // TODO: How would you like to fetch your repos? Don't forget to call the callback.
+    $.ajax ({
+      url: 'https://api.github.com/users/alexuwuwei/repos' + ‘>per_page=5&sort=updated’,
+      type: 'GET',
+      headers: {'Authorization': 'token ' + githubToken},
+      success: function (data, message, xhr) {
+        console.log(data);
 
+      }
+    });
   };
 
   // DONE: Model method that filters the full collection for repos with a particular attribute.
