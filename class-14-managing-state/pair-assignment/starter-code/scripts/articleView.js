@@ -13,6 +13,10 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+
+  /*
+  This is a method of the articleView object. Its purpose is to populate the filters that appear on the homepage of the blog. There are two private variables in this method: the options variable uses the allAuthors method of the Article object to then map the returned data using a function that takes the author as a parameter. it then returns a unique list that is then compiled into the available filter values.
+  */
   articleView.populateFilters = function() {
     var options,
       template = Handlebars.compile($('#option-template').text());
@@ -38,6 +42,9 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  /*
+  this is a method of the articleView object. It takes no parameters but does execute a function. this function grabs the id of filters from index.html, and then executes a function for each one after there is either a change or a selection. Then the resource var looks at the actual selection, and assigns a route equal to the selection name (replacing any existing whitespaces with + so that the page loads without errors.)
+  */
   articleView.handleFilters = function() {
     $('#filters').one('change', 'select', function() {
       resource = this.id.replace('-filter', '');
@@ -118,6 +125,9 @@
   };
 
   // COMMENT: What does this method do?  What is it's execution path?
+  /*
+  this is a method of the articleView object, taking an array of articles as a parameter. it first shows the articles id and hides all of its sibling elements. it then removes the placeholder article, and moves onto performing an action on each incoming article. It does this through a forEach loop, which executes a function that takes each article as a parameter. it then appends a true render of the article to the articles html ID, in order to properly show each article as part of the #articles container.
+   */
   articleView.index = function(articles) {
     $('#articles').show().siblings().hide();
 
