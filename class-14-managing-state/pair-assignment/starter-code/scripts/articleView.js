@@ -138,6 +138,10 @@
 
     articleView.populateFilters();
     // COMMENT: What does this method do?  What is it's execution path?
+
+    /*
+    this calls the handleFilters method of the articleView object. It is called after the populateFilters method because populateFilters actually renders the content to be shown in the filter dropdowns. Once they are rendered, handleFilters is called in order to handle any resulting routes that come from the user interacting with each available filter and making a selection from there. 
+    */
     articleView.handleFilters();
 
     // DONE: Replace setTeasers with just the truncation logic, if needed:
